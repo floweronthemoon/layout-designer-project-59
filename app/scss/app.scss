@@ -10,9 +10,9 @@
 // 8. Что-то еще из структуры
 // 9. Бутстрап в самом конце
 
-@import "variables.scss";
-@import "framework.scss";
-@import "general.scss";
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./variables.scss";
+@import "./framework.scss";
+@import "./general.scss";
+@import "./index_header.scss";
 
 

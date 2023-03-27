@@ -1,7 +1,7 @@
+// @import "../../node_modules/bootstrap/scss/functions";
+// @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
-
 // Переменные из проекта Figma
-
 
 $primary: #4545a5;
 $secondary: #6c757d;
@@ -11,10 +11,10 @@ $warning: #ffc107;
 $danger: #dc3545;
 $light: #fbfbfb;
 $dark: #343a40;
-
+$gray: #efefef;
 
 $custom-colors: (
-    "gray":#efefef
+    "gray": $gray
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
