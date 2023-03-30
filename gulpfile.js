@@ -14,8 +14,7 @@ const svgSprite = require('gulp-svg-sprite');
 var concat = require('gulp-concat');
 const { watch } = require('gulp');
 const browserSync = require('browser-sync').create();
-
-
+var rootDir = path.resolve('../','../','../','../');
 
 const buildSass = () => {
   console.log('Компиляция SASS');

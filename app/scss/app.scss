@@ -11,8 +11,9 @@
 // 9. Бутстрап в самом конце
 
 @import "./variables.scss";
+// В variables у меня подключается Bootstrap
 @import "./framework.scss";
 @import "./general.scss";
 @import "./index_header.scss";
-
+@import "../../node_modules/bootstrap/scss/bootstrap.scss"
 
