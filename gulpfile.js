@@ -7,13 +7,33 @@
 // 5. Вотчер
 // 6. Синхронизация с браузером
 
-const { src, dest, series } = require('gulp');
+const { gulp, src, dest, series } = require('gulp');
 const pug = require('gulp-pug');
 const sass = require('gulp-sass')(require('sass'));
 const svgSprite = require('gulp-svg-sprite');
 var concat = require('gulp-concat');
 const { watch } = require('gulp');
 const browserSync = require('browser-sync').create();
+
+const copyFile = () => {
+  return src('app/**')
+    .pipe(dest('build/app'))
+};
+
+
+const buildSprite = () => {
+  return src('/app/images/icons/*.svg')
+    .pipe(svgSprite({
+      mode: {
+        stack: {
+          sprite: "../sprite.svg"
+        }
+      },
+    }
+    ))
+    .pipe(dest('build/app/images/iconsprite'));
+};
+
 
 const buildSass = () => {
   console.log('Компиляция SASS');
@@ -23,7 +43,7 @@ const buildSass = () => {
     .pipe(concat('style.css'))
     .pipe(dest('build/'))
     .pipe(browserSync.stream());
-}
+};
 
 const buildPug = () => {
   console.log('Компиляция Pug');
@@ -54,8 +74,9 @@ const browserSyncJob = () => {
   watch('app/pug_files/*.pug').on('change', browserSync.reload)
 };
 
+exports.copy = copyFile;
 exports.server = browserSyncJob;
-exports.default = series(buildSass, buildPug, watchers, browserSyncJob);
+exports.default = series(copyFile, buildSprite, buildSass, buildPug, watchers, browserSyncJob);
 exports.watchers = watchers;
 
 
