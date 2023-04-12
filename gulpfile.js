@@ -20,7 +20,6 @@ const copyFile = () => {
     .pipe(dest('build/app'))
 };
 
-
 const buildSprite = () => {
   return src('./app/images/icons/*.svg')
     .pipe(svgSprite({
@@ -29,16 +28,24 @@ const buildSprite = () => {
           sprite: "../sprite.svg"
         }
       },
+      shape: {
+        id: {
+          separator: '--'
+        }
+      },
+      svg: {
+        namespaceIDs: true
+      },
     }
     ))
-    .pipe(dest('build/app/images/iconsprite'));
+    .pipe(dest('build/app/images/iconsprite'))
+    .pipe(browserSync.stream());
 };
-
 
 const buildSass = () => {
   console.log('Компиляция SASS');
 
-  return src('./app/scss/app.scss')
+  return src('build/app/scss/app.scss')
     .pipe(sass())
     .pipe(concat('style.css'))
     .pipe(dest('build/'))
@@ -48,7 +55,7 @@ const buildSass = () => {
 const buildPug = () => {
   console.log('Компиляция Pug');
 
-  return src('app/pug_files/*.pug')
+  return src('build/app/pug_files/*.pug')
     .pipe(pug({
       pretty: false
     })
@@ -62,16 +69,17 @@ const watchers = () => {
     server: "build/"
   })
   watch('build/').on('change', browserSync.reload)
-  watch('app/scss/*.scss'), (buildSass)
-  watch('app/pug_files/*.pug', (buildPug))
+  watch('build/app/scss/*.scss').on('change', buildSass)
+  watch('build/app/pug_files/*.pug').on('change', buildPug)
 };
 
 const browserSyncJob = () => {
   browserSync.init({
     server: "build/"
   })
-  watch('app/scss/*.scss').on('change', browserSync.reload)
-  watch('app/pug_files/*.pug').on('change', browserSync.reload)
+  // watch('app/scss/*.scss').on('change', browserSync.reload)
+  // watch('app/pug_files/*.pug').on('change', browserSync.reload)
+  watch('build/').on('change', browserSync.reload)
 };
 
 exports.copy = copyFile;
